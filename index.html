@@ -132,21 +132,21 @@
 
             /* --- Bottom Controls --- */
                                                                         .bottom-controls {
-                                                                            display: flex;
-                                                                            flex-direction: column;
-                                                                            flex: 0 0 auto;
-                                                                            border: none;
-                                                                            border-radius: 36px 36px 0 0;
-                                                                            margin-top: auto;
-                                                                            background-color: var(--bg-panel);
-                                                                            gap: 12px;
-                                                                            padding: 15px 12px calc(24px + env(safe-area-inset-bottom, 16px)) 12px;
-                                                                            justify-content: flex-start;
-                                                                            align-items: center;
-                                                                            box-sizing: border-box;
-                                                                            box-shadow: 0 -5px 25px rgba(0,0,0,0.4);
-                                                                            z-index: 10;
-                                                                        }
+                                                                                                                                                    display: flex;
+                                                                                                                                                    flex-direction: column;
+                                                                                                                                                    flex: 0 0 auto;
+                                                                                                                                                    border: none;
+                                                                                                                                                    border-radius: 36px 36px 0 0;
+                                                                                                                                                    margin-top: auto;
+                                                                                                                                                    background-color: var(--bg-panel);
+                                                                                                                                                    gap: 12px;
+                                                                                                                                                    padding: 20px 16px calc(24px + env(safe-area-inset-bottom, 16px)) 16px;
+                                                                                                                                                    justify-content: flex-start;
+                                                                                                                                                    align-items: center;
+                                                                                                                                                    box-sizing: border-box;
+                                                                                                                                                    box-shadow: 0 -5px 25px rgba(0,0,0,0.4);
+                                                                                                                                                    z-index: 10;
+                                                                                                                                                }
                         .bottom-controls::-webkit-scrollbar {
                             display: none;
                         }
@@ -368,10 +368,10 @@
                                                                         </div>
                                                                     </div>
 
-                                                                                                            <div style="display: flex; width: 100%; gap: 10px; justify-content: center; margin-bottom: 8px;" id="trade-type-tabs">
-                                                                                                                <button class="trade-tab active" data-ttype="options" style="flex:1;">OPTIONS</button>
-                                                                                                                <button class="trade-tab" data-ttype="multiplier" style="flex:1;">MULTIPLIER</button>
-                                                                                                            </div>
+                                                                                                            <div style="display: flex; width: 100%; gap: 40px; justify-content: center; margin-bottom: 12px; margin-top: 4px;" id="trade-type-tabs">
+                                                                                                                                                                                                                            <button class="trade-tab active" data-ttype="options" style="flex: none; background: transparent !important; box-shadow: none !important; font-size: 13px; font-weight: 800; letter-spacing: 0.05em; padding: 4px 8px;">OPTIONS</button>
+                                                                                                                                                                                                                            <button class="trade-tab" data-ttype="multiplier" style="flex: none; background: transparent !important; box-shadow: none !important; font-size: 13px; font-weight: 800; letter-spacing: 0.05em; padding: 4px 8px;">MULTIPLIER</button>
+                                                                                                                                                                                                                        </div>
                                                                                                                                                                                                                         <div style="display: flex; width: 100%; gap: 12px; align-items: center; justify-content: space-between;">
                                                                                                                                                                                                                             <div style="display: flex; flex: 1; gap: 8px;" id="inputs-options">
                                                                                                                                                                                                                                 <div style="display:flex; flex:1; align-items:center; background:var(--bg-btn); border-radius:24px; padding:0 8px; height: 52px;">
@@ -391,11 +391,11 @@
                                                                                                                                                                                                                                 <div style="display:flex; flex:1; align-items:center; background:var(--bg-btn); border-radius:24px; padding:0 8px; height: 52px;">
                                                                                                                                                                                                                                     <span style="color:var(--accent); font-weight:bold; font-size:12px; margin-right:4px;">X</span>
                                                                                                                                                                                                                                     <select id="mult-value" style="font-size: 14px; padding: 0; width: 100%; background:transparent; appearance:none; outline:none; border:none; text-align:center; color:var(--text-main);">
-                                                                                                                                                                                                                                        <option value="100" style="color:black;">100</option>
-                                                                                                                                                                                                                                        <option value="200" style="color:black;">200</option>
-                                                                                                                                                                                                                                        <option value="500" style="color:black;" selected>500</option>
-                                                                                                                                                                                                                                        <option value="1000" style="color:black;">1000</option>
-                                                                                                                                                                                                                                    </select>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="100" style="color:black;">100</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="200" style="color:black;">200</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="500" style="color:black;" selected>500</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="800" style="color:black;">800</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </select>
                                                                                                                                                                                                                                 </div>
                                                                                                                                                                                                                             </div>
                                                                                                                                                                                                                             <div style="display: flex; gap: 8px; justify-content: flex-end;">
