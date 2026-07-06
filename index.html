@@ -6,17 +6,17 @@
     <title>Trading Dashboard - LIVE TV</title>
 
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#000432">
+    <meta name="theme-color" content="#000000">
     <link rel="apple-touch-icon" href="icon-192.png">
     <style>
             :root {
-                --bg-main: #000432;
-                --bg-panel: #000432;
-                --bg-btn: rgba(255, 255, 255, 0.05);
-                --text-main: #c8d0e7;
-                --text-muted: #8892b0;
-                --accent: #ffcc00;
-                --grid-line: rgba(255, 255, 255, 0.2);
+                --bg-main: #f0f0f0;
+                --bg-panel: #ffffff;
+                --bg-btn: #e6e6e6;
+                --text-main: #222222;
+                --text-muted: #666666;
+                --accent: #ff7f00;
+                --grid-line: rgba(0, 0, 0, 0.1);
             }
             body.theme-black {
                 --bg-main: #000000;
@@ -62,6 +62,7 @@
                 border: none;
                 box-sizing: border-box;
                 background: var(--bg-main);
+                padding-top: env(safe-area-inset-top, 16px);
             }
 
             /* --- Asset Selector Categories --- */
@@ -89,7 +90,7 @@
                         font-size: 13px;
                         font-weight: bold;
                         cursor: pointer;
-                        border-radius: 10px;
+                        border-radius: 20px;
                         text-align: center;
                         transition: background 0.2s, color 0.2s;
                     }
@@ -114,7 +115,7 @@
                 font-size: 10px;
                 font-weight: bold;
                 cursor: pointer;
-                border-radius: 6px;
+                border-radius: 16px;
                 white-space: nowrap;
                 text-align: center;
                 transition: background 0.2s, color 0.2s;
@@ -135,11 +136,11 @@
                                                                             flex-direction: column;
                                                                             flex: 0 0 auto;
                                                                             border: none;
-                                                                            border-radius: 24px 24px 0 0;
+                                                                            border-radius: 36px 36px 0 0;
                                                                             margin-top: auto;
                                                                             background-color: var(--bg-panel);
                                                                             gap: 12px;
-                                                                            padding: 15px 12px 20px 12px;
+                                                                            padding: 15px 12px calc(24px + env(safe-area-inset-bottom, 16px)) 12px;
                                                                             justify-content: flex-start;
                                                                             align-items: center;
                                                                             box-sizing: border-box;
@@ -174,7 +175,7 @@
                 border: none;
                 padding: 6px;
                 width: 44px;
-                border-radius: 6px;
+                border-radius: 12px;
                 text-align: center;
                 font-family: inherit;
                 outline: none;
@@ -200,7 +201,7 @@
                 font-size: 10px;
                 font-weight: bold;
                 cursor: pointer;
-                border-radius: 6px;
+                border-radius: 16px;
                 margin: 0 2px !important;
                 letter-spacing: 0.05em;
                 background: var(--bg-btn);
@@ -253,7 +254,7 @@
                                                 align-items: flex-start;
                                                 background: var(--bg-panel);
                                                 border: none;
-                                                border-radius: 8px;
+                                                border-radius: 16px;
                                                 padding: 6px 10px;
                                                 z-index: 20;
                                                 box-shadow: 0 4px 12px rgba(0,0,0,0.4);
@@ -289,7 +290,7 @@
                 padding: 2px 6px; 
                 font-size: 10px; 
                 cursor: pointer; 
-                border-radius: 4px; 
+                border-radius: 12px; 
                 font-weight: bold; 
             }
             .quick-time-btn:hover { color: var(--text-main); }
@@ -313,7 +314,7 @@
                 font-weight: bold; 
                 cursor: pointer; 
                 padding: 6px 12px; 
-                border-radius: 8px; 
+                border-radius: 16px; 
                 font-size: 11px;
             }
             .trade-tab.active { 
@@ -323,7 +324,7 @@
             }
         </style>
 </head>
-<body class="theme-white">
+<body class="theme-black">
 
     <div class="dashboard-container">
         <div class="chart-section">
@@ -345,8 +346,7 @@
                     </div>
                 </div>
                 <div class="bottom-controls">
-                            <!-- LAYER 1: Header (Asset + Balance + Tools) -->
-                                                                    <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 4px; margin-bottom: 2px;">
+                            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 4px; margin-bottom: 2px;">
                                                                         <button id="asset-selector-btn" style="background: transparent; color: var(--text-main); border: none; padding: 0; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; outline: none; vertical-align: middle;">
                                                                             <span id="current-asset-name">V100[1s]</span>
                                                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -368,26 +368,42 @@
                                                                         </div>
                                                                     </div>
 
-                                                                                                            <!-- LAYER 2: Inputs & Actions -->
+                                                                                                            <div style="display: flex; width: 100%; gap: 10px; justify-content: center; margin-bottom: 8px;" id="trade-type-tabs">
+                                                                                                                <button class="trade-tab active" data-ttype="options" style="flex:1;">OPTIONS</button>
+                                                                                                                <button class="trade-tab" data-ttype="multiplier" style="flex:1;">MULTIPLIER</button>
+                                                                                                            </div>
                                                                                                                                                                                                                         <div style="display: flex; width: 100%; gap: 12px; align-items: center; justify-content: space-between;">
-                                                                                                                                                                                                                            <!-- Inputs -->
-                                                                                                                                                                                                                            <div style="display: flex; flex: 1; gap: 8px;">
-                                                                                                                                                                                                                                <div style="display:flex; flex:1; align-items:center; background:var(--bg-btn); border-radius:12px; padding:0 8px; height: 52px;">
+                                                                                                                                                                                                                            <div style="display: flex; flex: 1; gap: 8px;" id="inputs-options">
+                                                                                                                                                                                                                                <div style="display:flex; flex:1; align-items:center; background:var(--bg-btn); border-radius:24px; padding:0 8px; height: 52px;">
                                                                                                                                                                                                                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffcc00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                                                                                                                                                                                                                                     <input type="number" id="trade-amount" value="0.35" placeholder="Amt" aria-label="Trade Amount" step="0.01" style="font-size: 14px; padding: 0; width: 100%;">
                                                                                                                                                                                                                                 </div>
-                                                                                                                                                                                                                                <div style="display:flex; flex:1; align-items:center; background:var(--bg-btn); border-radius:12px; padding:0 8px; height: 52px;">
+                                                                                                                                                                                                                                <div style="display:flex; flex:1; align-items:center; background:var(--bg-btn); border-radius:24px; padding:0 8px; height: 52px;">
                                                                                                                                                                                                                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffcc00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v4L12 12l8 6v4H4v-4l8-6-8-6z"></path></svg>
                                                                                                                                                                                                                                     <input type="number" id="trade-expiry" value="35" placeholder="Exp" aria-label="Trade Expiry Time" style="font-size: 14px; padding: 0; width: 100%;">
                                                                                                                                                                                                                                 </div>
                                                                                                                                                                                                                             </div>
-                                                                                                                                                                                                                            <!-- Small Right Oriented Action Buttons -->
+                                                                                                                                                                                                                            <div style="display: none; flex: 1; gap: 8px;" id="inputs-multiplier">
+                                                                                                                                                                                                                                <div style="display:flex; flex:1; align-items:center; background:var(--bg-btn); border-radius:24px; padding:0 8px; height: 52px;">
+                                                                                                                                                                                                                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffcc00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                                                                                                                                                                                                                    <input type="number" id="mult-amount" value="10" placeholder="Amt" step="1" style="font-size: 14px; padding: 0; width: 100%;">
+                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                <div style="display:flex; flex:1; align-items:center; background:var(--bg-btn); border-radius:24px; padding:0 8px; height: 52px;">
+                                                                                                                                                                                                                                    <span style="color:var(--accent); font-weight:bold; font-size:12px; margin-right:4px;">X</span>
+                                                                                                                                                                                                                                    <select id="mult-value" style="font-size: 14px; padding: 0; width: 100%; background:transparent; appearance:none; outline:none; border:none; text-align:center; color:var(--text-main);">
+                                                                                                                                                                                                                                        <option value="100" style="color:black;">100</option>
+                                                                                                                                                                                                                                        <option value="200" style="color:black;">200</option>
+                                                                                                                                                                                                                                        <option value="500" style="color:black;" selected>500</option>
+                                                                                                                                                                                                                                        <option value="1000" style="color:black;">1000</option>
+                                                                                                                                                                                                                                    </select>
+                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                            </div>
                                                                                                                                                                                                                             <div style="display: flex; gap: 8px; justify-content: flex-end;">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button id="trade-btn" class="action-btn btn-call" aria-label="Buy Call" style="background: rgba(14,203,129,0.1); border: none; padding: 6px 12px !important; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; min-width: 65px; height: 52px;">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button id="trade-btn" class="action-btn btn-call" aria-label="Buy Call" style="background: rgba(14,203,129,0.1); border: none; padding: 6px 12px !important; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 24px; min-width: 65px; height: 52px;">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="#0ecb81" stroke="#0ecb81" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0px 0px 4px rgba(14,203,129,0.8));"><polygon points="12 4 2 20 22 20"></polygon></svg>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <span id="call-btn-text" style="font-size: 10px; color: var(--text-main); font-weight: normal; margin-top: 4px;">$0.35 | 35s</span>
                                                                                                                                                                                                                                                                                                                                                                                                                                                             </button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button id="trade-btn-put" class="action-btn btn-put" aria-label="Sell Put" style="background: rgba(246,70,93,0.1); border: none; padding: 6px 12px !important; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; min-width: 65px; height: 52px;">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button id="trade-btn-put" class="action-btn btn-put" aria-label="Sell Put" style="background: rgba(246,70,93,0.1); border: none; padding: 6px 12px !important; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 24px; min-width: 65px; height: 52px;">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="#f6465d" stroke="#f6465d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0px 0px 4px rgba(246,70,93,0.8));"><polygon points="12 20 2 4 22 4"></polygon></svg>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <span id="put-btn-text" style="font-size: 10px; color: var(--text-main); font-weight: normal; margin-top: 4px;">$0.35 | 35s</span>
                                                                                                                                                                                                                                                                                                                                                                                                                                                             </button>
@@ -398,7 +414,7 @@
                 </div>
 
                 <div id="tradeModalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2001; backdrop-filter: blur(2px);"></div>
-                                                        <div id="tradeModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:90vw; max-width:420px; height:500px; background:var(--bg-panel); border-radius: 20px; z-index:2002; flex-direction:column; overflow: hidden; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                                                        <div id="tradeModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:90vw; max-width:420px; height:500px; background:var(--bg-panel); border-radius: 32px; z-index:2002; flex-direction:column; overflow: hidden; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
                                                                                     <div style="padding:15px; background:var(--bg-panel); color:var(--accent); font-weight:800; font-size:12px; letter-spacing:0.1em; display:flex; justify-content:space-between; align-items:center; z-index: 10;">
                                                                                         <span>LIVE TRADE TERMINAL</span>
                                                                                         <button id="close-modal-btn" style="background:transparent; border:none; color:var(--accent); cursor:pointer; font-size:16px;">✕</button>
@@ -414,9 +430,8 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- ASSET SELECTOR MODAL -->
                                                         <div id="assetModalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2001; backdrop-filter: blur(2px);"></div>
-                                                        <div id="assetModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:90vw; max-width:420px; height:75vh; background:var(--bg-panel); border-radius: 20px; z-index:2002; flex-direction:column; overflow: hidden; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                                                        <div id="assetModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:90vw; max-width:420px; height:75vh; background:var(--bg-panel); border-radius: 32px; z-index:2002; flex-direction:column; overflow: hidden; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
                                                             <div style="padding:15px 20px; background:var(--bg-panel); color:var(--accent); font-weight:800; font-size:14px; letter-spacing:0.1em; display:flex; justify-content:space-between; align-items:center; z-index: 10; border-bottom: 1px solid var(--grid-line);">
                                                                 <span>MARKETS</span>
                                                                 <button id="close-asset-modal-btn" style="background:transparent; border:none; color:var(--accent); cursor:pointer; font-size:20px;">✕</button>
@@ -485,6 +500,7 @@
                 let serverTimeOffset = 0;
                 let currentTradeTab = 'ALL';
                 let soundEnabled = false;
+                let activeTradeType = 'options';
 
                 const trackedPairs = [
                                                                     "1HZ10V", "1HZ15V", "1HZ25V", "1HZ30V", "1HZ50V",
@@ -723,7 +739,7 @@
                     if (t.status === 'OPEN' && t.expiry) {
                         const secondsDiff = t.expiry - lastCandle.time;
                         const lineX = lastCandleCenterX + ((secondsDiff / candleDur) * totalCandleWidth);
-                        const color = t.type === 'CALL' ? '#0ecb81' : '#f6465d';
+                        const color = t.type === 'CALL' || t.type === 'MULTUP' ? '#0ecb81' : '#f6465d';
 
                         if (lineX > 0 && lineX < canvasWidth) {
                             ctx.strokeStyle = color;
@@ -853,7 +869,7 @@
                                                 if (data.error.code === 'InvalidToken' || data.error.code === 'AuthorizationRequired') {
                                                     setTimeout(connect, 5000); // Silent reconnect loop
                                                 } else if (data.error.code === 'InvalidContractParameters') {
-                                                    alert("⚠️ PARAMETER ERROR: Trading is not available for this Symbol at the selected duration.\n\nTry changing Duration to Minutes.");
+                                                    alert("⚠️ PARAMETER ERROR: Trading is not available for this Symbol at the selected duration/mode.\n\nTry changing Duration or Asset.");
                                                 }
                                                 return;
                                             }
@@ -880,7 +896,7 @@
                 if (data.buy) {
                     const cid = data.buy.contract_id;
                     const type = data.echo_req.parameters && data.echo_req.parameters.contract_type ? data.echo_req.parameters.contract_type : "TRADE";
-                    const duration = data.echo_req.parameters ? data.echo_req.parameters.duration : 0;
+                    const duration = data.echo_req.parameters ? (data.echo_req.parameters.duration || 0) : 0;
                     const currentServerTime = Math.floor(Date.now() / 1000) + serverTimeOffset;
 
                     const t = {
@@ -889,6 +905,7 @@
                         stake: data.buy.buy_price,
                         status: 'OPEN',
                         profit: 0,
+                        is_valid_to_sell: 1, // Assume valid until API says otherwise
                         expiry: data.buy.start_time ? (data.buy.start_time + duration) : (currentServerTime + duration),
                         entry_spot: null,
                         entry_time: data.buy.start_time || currentServerTime
@@ -909,6 +926,10 @@
                         const oldStatus = t.status;
                         t.profit = Number(c.profit || 0);
 
+                        if (c.is_valid_to_sell !== undefined) {
+                            t.is_valid_to_sell = c.is_valid_to_sell;
+                        }
+
                         // Better logic for parsing Deriv's status fields to file WON/LOST correctly
                         let newStatus = 'OPEN';
                         if (c.status === 'won') newStatus = 'WON';
@@ -925,7 +946,7 @@
                             playAlert(t.status === 'WON' ? 'win' : 'loss');
                         }
 
-                        // Re-render UI to show dynamic ticking live profit
+                        // Re-render UI to show dynamic ticking live profit and sell button toggle
                         updateTradeUI();
                     }
                 }
@@ -943,7 +964,10 @@
         // --- TRADES UI MODAL ---
         document.querySelectorAll('.trade-tab').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.trade-tab').forEach(b => b.classList.remove('active'));
+                // Ignore the ones used for Trade Type mapping (options/multiplier)
+                if (e.target.hasAttribute('data-ttype')) return;
+                
+                document.querySelectorAll('#trade-tabs .trade-tab').forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
                 currentTradeTab = e.target.getAttribute('data-tab');
                 updateTradeUI();
@@ -968,10 +992,11 @@
                         let profColor = profNum > 0 ? '#0ecb81' : (profNum < 0 ? '#f6465d' : 'white');
                         let stakeStr = Number(t.stake || 0).toFixed(2);
 
-                        let sellBtn = t.status === 'OPEN' ? `<button onclick="sellContract(${t.id})" style="background:var(--bg-btn); color:#f6465d; border:1px solid #f6465d; border-radius:4px; padding:4px 8px; font-size:10px; font-weight:bold; cursor:pointer; margin-top:6px; z-index:100;">CLOSE EARLY</button>` : '';
+                        // Only show Close Early if it's OPEN AND the API says it's valid to sell
+                        let sellBtn = (t.status === 'OPEN' && t.is_valid_to_sell === 1) ? `<button onclick="sellContract(${t.id})" style="background:var(--bg-btn); color:#f6465d; border:1px solid #f6465d; border-radius:12px; padding:4px 8px; font-size:10px; font-weight:bold; cursor:pointer; margin-top:6px; z-index:100;">CLOSE EARLY</button>` : '';
 
                         html += `
-                                                <div style="display:flex; justify-content:space-between; background:var(--bg-btn); padding:12px; border-radius:10px; border-left:3px solid ${color}; margin-bottom:10px; border:none;">
+                                                <div style="display:flex; justify-content:space-between; background:var(--bg-btn); padding:12px; border-radius:16px; border-left:4px solid ${color}; margin-bottom:10px; border:none;">
                                                                             <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-start;">
                                                                                 <span style="font-weight:bold; color:var(--text-main); font-size:12px;">${t.type} <span style="color:var(--text-muted); font-size:10px;">#${t.id}</span></span>
                                 <span style="color:#aaa; font-size:10px;">STAKE: $${stakeStr}</span>
@@ -1103,27 +1128,48 @@
                                         });
                                     });
 
-                                            function executeTrade(type) {
+        function executeTrade(type) {
             if (!ws || ws.readyState !== WebSocket.OPEN) {
                 return;
             }
-            const stake = parseFloat(document.getElementById('trade-amount').value) || 10;
-            const expirySecs = parseInt(document.getElementById('trade-expiry').value) || 300;
+            
+            let tradePayload;
 
-            const tradePayload = {
-                buy: "1",
-                price: Number(stake * 2),
-                parameters: {
-                    amount: Number(stake),
-                    basis: "stake",
-                    contract_type: type,
-                    currency: "USD",
-                    duration: expirySecs,
-                    duration_unit: "s",
-                    underlying_symbol: currentPair
-                }
-            };
-            ws.send(JSON.stringify(tradePayload));
+            if (activeTradeType === 'options') {
+                const stake = parseFloat(document.getElementById('trade-amount').value) || 10;
+                const expirySecs = parseInt(document.getElementById('trade-expiry').value) || 300;
+                tradePayload = {
+                    buy: "1",
+                    price: Number(stake * 2),
+                    parameters: {
+                        amount: Number(stake),
+                        basis: "stake",
+                        contract_type: type, // "CALL" or "PUT"
+                        currency: "USD",
+                        duration: expirySecs,
+                        duration_unit: "s",
+                        underlying_symbol: currentPair
+                    }
+                };
+            } else if (activeTradeType === 'multiplier') {
+                const stake = parseFloat(document.getElementById('mult-amount').value) || 10;
+                const multVal = parseInt(document.getElementById('mult-value').value) || 500;
+                const multType = type === "CALL" ? "MULTUP" : "MULTDOWN";
+                tradePayload = {
+                    buy: "1",
+                    price: Number(stake * 2),
+                    parameters: {
+                        amount: Number(stake),
+                        basis: "stake",
+                        contract_type: multType,
+                        currency: "USD",
+                        multiplier: multVal,
+                        underlying_symbol: currentPair
+                    }
+                };
+            }
+
+            if (tradePayload) ws.send(JSON.stringify(tradePayload));
         }
 
         window.sellContract = function(id) {
@@ -1132,24 +1178,52 @@
             }
         };
 
-        // Event listener connections for the buttons
-                document.getElementById('trade-btn').addEventListener('click', () => executeTrade("CALL"));
-                document.getElementById('trade-btn-put').addEventListener('click', () => executeTrade("PUT"));
-
-                function updateButtonText() {
-                    const amt = document.getElementById('trade-amount').value || '0';
-                    const exp = document.getElementById('trade-expiry').value || '0';
-                    const txt = `$${amt} | ${exp}s`;
-                    const callTxt = document.getElementById('call-btn-text');
-                    const putTxt = document.getElementById('put-btn-text');
-                    if (callTxt) callTxt.innerText = txt;
-                    if (putTxt) putTxt.innerText = txt;
+        // Trade Type Toggle Listeners
+        document.querySelectorAll('#trade-type-tabs .trade-tab').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('#trade-type-tabs .trade-tab').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                activeTradeType = e.target.getAttribute('data-ttype');
+                
+                if(activeTradeType === 'options') {
+                    document.getElementById('inputs-options').style.display = 'flex';
+                    document.getElementById('inputs-multiplier').style.display = 'none';
+                } else {
+                    document.getElementById('inputs-options').style.display = 'none';
+                    document.getElementById('inputs-multiplier').style.display = 'flex';
                 }
-                document.getElementById('trade-amount').addEventListener('input', updateButtonText);
-                document.getElementById('trade-expiry').addEventListener('input', updateButtonText);
-        
                 updateButtonText();
-                connect();
+            });
+        });
+
+        // Event listener connections for the buttons
+        document.getElementById('trade-btn').addEventListener('click', () => executeTrade("CALL"));
+        document.getElementById('trade-btn-put').addEventListener('click', () => executeTrade("PUT"));
+
+        function updateButtonText() {
+            let txt = '';
+            if (activeTradeType === 'options') {
+                const amt = document.getElementById('trade-amount').value || '0';
+                const exp = document.getElementById('trade-expiry').value || '0';
+                txt = `$${amt} | ${exp}s`;
+            } else {
+                const amt = document.getElementById('mult-amount').value || '0';
+                const mult = document.getElementById('mult-value').value || '0';
+                txt = `$${amt} | x${mult}`;
+            }
+            
+            const callTxt = document.getElementById('call-btn-text');
+            const putTxt = document.getElementById('put-btn-text');
+            if (callTxt) callTxt.innerText = txt;
+            if (putTxt) putTxt.innerText = txt;
+        }
+        document.getElementById('trade-amount').addEventListener('input', updateButtonText);
+        document.getElementById('trade-expiry').addEventListener('input', updateButtonText);
+        document.getElementById('mult-amount').addEventListener('input', updateButtonText);
+        document.getElementById('mult-value').addEventListener('change', updateButtonText);
+
+        updateButtonText();
+        connect();
 
         // --- ASSET SELECTOR MODAL LOGIC ---
                 const assetSelectorBtn = document.getElementById('asset-selector-btn');
@@ -1205,15 +1279,15 @@
                         }, 1000);
 
                                                 // Theme Toggle Logic
-                                                                        const themes = ['theme-blue', 'theme-black', 'theme-white'];
-                                                                        let currentThemeIdx = 2;
+                                                                        const themes = ['theme-black', 'theme-white'];
+                                                                        let currentThemeIdx = 1; // start at theme-white
                                                                         const themeToggleBtn = document.getElementById('theme-toggle-btn');
                                                 if(themeToggleBtn) {
                                                     themeToggleBtn.addEventListener('click', () => {
                                                         document.body.classList.remove('theme-black', 'theme-white');
-                                                        currentThemeIdx = (currentThemeIdx + 1) % 3;
-                                                        if (currentThemeIdx === 1) document.body.classList.add('theme-black');
-                                                        else if (currentThemeIdx === 2) document.body.classList.add('theme-white');
+                                                        currentThemeIdx = (currentThemeIdx + 1) % 2;
+                                                        if (currentThemeIdx === 0) document.body.classList.add('theme-black');
+                                                        else if (currentThemeIdx === 1) document.body.classList.add('theme-white');
                                                         drawChart(); 
                                                     });
                                                 }
