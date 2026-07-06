@@ -730,56 +730,84 @@
 
 
             // --- DRAW OPEN TRADE ENTRY & EXPIRY LINES ---
-            if (tradeHistory.length > 0) {
-                const lastCandleX = chartAreaWidth - totalCandleWidth;
-                const lastCandleCenterX = lastCandleX + (candleWidth / 2);
-                const candleDur = getCandleDuration();
+                        if (tradeHistory.length > 0) {
+                            const lastCandleX = chartAreaWidth - totalCandleWidth;
+                            const lastCandleCenterX = lastCandleX + (candleWidth / 2);
+                            const candleDur = getCandleDuration();
 
-                tradeHistory.forEach(t => {
-                    if (t.status === 'OPEN' && t.expiry) {
-                        const secondsDiff = t.expiry - lastCandle.time;
-                        const lineX = lastCandleCenterX + ((secondsDiff / candleDur) * totalCandleWidth);
-                        const color = t.type === 'CALL' || t.type === 'MULTUP' ? '#0ecb81' : '#f6465d';
+                            tradeHistory.forEach(t => {
+                                if (t.status === 'OPEN') {
+                                    const isMultiplier = t.type === 'MULTUP' || t.type === 'MULTDOWN';
+                                    let lineX = canvasWidth;
 
-                        if (lineX > 0 && lineX < canvasWidth) {
-                            ctx.strokeStyle = color;
-                            ctx.lineWidth = 1;
-                            ctx.setLineDash([4, 4]);
-                            ctx.beginPath();
-                            ctx.moveTo(lineX, 0);
-                            ctx.lineTo(lineX, chartHeight);
-                            ctx.stroke();
-                            ctx.setLineDash([]);
+                                    if (!isMultiplier && t.expiry) {
+                                        const secondsDiff = t.expiry - lastCandle.time;
+                                        lineX = lastCandleCenterX + ((secondsDiff / candleDur) * totalCandleWidth);
+                                        const color = t.type === 'CALL' ? '#0ecb81' : '#f6465d';
 
-                            ctx.fillStyle = color;
-                            ctx.font = 'bold 9px sans-serif';
-                            ctx.textAlign = 'center';
-                            ctx.textBaseline = 'bottom';
-                            ctx.fillText('EXP', lineX, chartHeight - 2);
+                                        if (lineX > 0 && lineX < canvasWidth) {
+                                            ctx.strokeStyle = color;
+                                            ctx.lineWidth = 1;
+                                            ctx.setLineDash([4, 4]);
+                                            ctx.beginPath();
+                                            ctx.moveTo(lineX, 0);
+                                            ctx.lineTo(lineX, chartHeight);
+                                            ctx.stroke();
+                                            ctx.setLineDash([]);
+
+                                            ctx.fillStyle = color;
+                                            ctx.font = 'bold 9px sans-serif';
+                                            ctx.textAlign = 'center';
+                                            ctx.textBaseline = 'bottom';
+                                            ctx.fillText('EXP', lineX, chartHeight - 2);
+                                        }
+                                    }
+
+                                    if (t.entry_spot && t.entry_time) {
+                                        const color = t.type === 'CALL' || t.type === 'MULTUP' ? '#0ecb81' : '#f6465d';
+                                        const entryY = getY(t.entry_spot);
+                                        const entrySecondsDiff = t.entry_time - lastCandle.time;
+                                        const entryX = lastCandleCenterX + ((entrySecondsDiff / candleDur) * totalCandleWidth);
+
+                                        if (entryY > 0 && entryY < chartHeight) {
+                                            ctx.strokeStyle = color;
+                                            ctx.lineWidth = 1;
+                                            ctx.beginPath();
+                                            ctx.moveTo(entryX, entryY);
+                                            ctx.lineTo(Math.min(lineX, canvasWidth), entryY);
+                                            ctx.stroke();
+
+                                            ctx.fillStyle = color;
+                                            ctx.beginPath();
+                                            ctx.arc(entryX, entryY, 2.5, 0, Math.PI * 2);
+                                            ctx.fill();
+                                        }
+                                    }
+
+                                    if (isMultiplier && t.entry_spot && t.multiplier) {
+                                        const burstPrice = t.type === 'MULTUP' ? t.entry_spot * (1 - (1 / t.multiplier)) : t.entry_spot * (1 + (1 / t.multiplier));
+                                        const burstY = getY(burstPrice);
+
+                                        if (burstY > 0 && burstY < chartHeight) {
+                                            ctx.strokeStyle = '#f6465d';
+                                            ctx.lineWidth = 1.5;
+                                            ctx.setLineDash([4, 4]);
+                                            ctx.beginPath();
+                                            ctx.moveTo(0, burstY);
+                                            ctx.lineTo(canvasWidth - yAxisWidth, burstY);
+                                            ctx.stroke();
+                                            ctx.setLineDash([]);
+
+                                            ctx.fillStyle = '#f6465d';
+                                            ctx.font = 'bold 9px sans-serif';
+                                            ctx.textAlign = 'right';
+                                            ctx.textBaseline = 'bottom';
+                                            ctx.fillText('BURST', canvasWidth - yAxisWidth - 5, burstY - 2);
+                                        }
+                                    }
+                                }
+                            });
                         }
-
-                        if (t.entry_spot && t.entry_time) {
-                            const entryY = getY(t.entry_spot);
-                            const entrySecondsDiff = t.entry_time - lastCandle.time;
-                            const entryX = lastCandleCenterX + ((entrySecondsDiff / candleDur) * totalCandleWidth);
-
-                            if (entryY > 0 && entryY < chartHeight) {
-                                ctx.strokeStyle = color;
-                                ctx.lineWidth = 1;
-                                ctx.beginPath();
-                                ctx.moveTo(entryX, entryY);
-                                ctx.lineTo(Math.min(lineX, canvasWidth), entryY);
-                                ctx.stroke();
-
-                                ctx.fillStyle = color;
-                                ctx.beginPath();
-                                ctx.arc(entryX, entryY, 2.5, 0, Math.PI * 2);
-                                ctx.fill();
-                            }
-                        }
-                    }
-                });
-            }
 
             // --- DRAW CURRENT PRICE LABEL & TIMER ---
             const currentPrice = lastCandle.close;
@@ -894,22 +922,24 @@
                                 }
 
                 if (data.buy) {
-                    const cid = data.buy.contract_id;
-                    const type = data.echo_req.parameters && data.echo_req.parameters.contract_type ? data.echo_req.parameters.contract_type : "TRADE";
-                    const duration = data.echo_req.parameters ? (data.echo_req.parameters.duration || 0) : 0;
-                    const currentServerTime = Math.floor(Date.now() / 1000) + serverTimeOffset;
+                                    const cid = data.buy.contract_id;
+                                    const type = data.echo_req.parameters && data.echo_req.parameters.contract_type ? data.echo_req.parameters.contract_type : "TRADE";
+                                    const duration = data.echo_req.parameters ? (data.echo_req.parameters.duration || 0) : 0;
+                                    const multiplier = data.echo_req.parameters ? data.echo_req.parameters.multiplier : null;
+                                    const currentServerTime = Math.floor(Date.now() / 1000) + serverTimeOffset;
 
-                    const t = {
-                        id: cid,
-                        type: type,
-                        stake: data.buy.buy_price,
-                        status: 'OPEN',
-                        profit: 0,
-                        is_valid_to_sell: 1, // Assume valid until API says otherwise
-                        expiry: data.buy.start_time ? (data.buy.start_time + duration) : (currentServerTime + duration),
-                        entry_spot: null,
-                        entry_time: data.buy.start_time || currentServerTime
-                    };
+                                    const t = {
+                                        id: cid,
+                                        type: type,
+                                        stake: data.buy.buy_price,
+                                        multiplier: multiplier,
+                                        status: 'OPEN',
+                                        profit: 0,
+                                        is_valid_to_sell: 1, // Assume valid until API says otherwise
+                                        expiry: data.buy.start_time ? (data.buy.start_time + duration) : (currentServerTime + duration),
+                                        entry_spot: null,
+                                        entry_time: data.buy.start_time || currentServerTime
+                                    };
                     tradeHistory.push(t);
                     playAlert('buy');
 
