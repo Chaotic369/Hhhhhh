@@ -946,42 +946,56 @@
                             const data = JSON.parse(msg.data);
 
                                             if (data.error) {
-                                                                                            if (data.error.code === 'ContractNotFound' || data.error.message.includes('not found among your open positions')) {
-                                                                                                // Suppress silent failures for closing expired contracts
-                                                                                                return;
-                                                                                            }
+                                                                                                                                        if (data.error.code === 'ContractNotFound' || data.error.message.includes('not found among your open positions')) {
+                                                                                                                                            // Suppress silent failures for closing expired contracts
+                                                                                                                                            return;
+                                                                                                                                        }
                                                 
-                                                                                            console.error("API Error:", data.error.message);
+                                                                                                                                        console.error("API Error:", data.error.message);
 
-                                                                                            if (data.error.code === 'AlreadySubscribed' || data.error.message.includes('already subscribed')) {
-                                                                                                return;
-                                                                                            }
+                                                                                                                                        // Intercept background proposal errors completely to prevent alert spam
+                                                                                                                                        if (data.req_id === 1) {
+                                                                                                                                            const pctElem = document.getElementById('payout-percentage');
+                                                                                                                                            const rateBadge = document.getElementById('asset-payout-rate');
+                                                                                                                                            const profElem = document.getElementById('payout-profit');
+                                                                                                
+                                                                                                                                            if (pctElem) pctElem.innerText = `N/A`;
+                                                                                                                                            if (rateBadge) rateBadge.innerText = `UNAVAILABLE`;
+                                                                                                                                            if (profElem) {
+                                                                                                                                                profElem.innerText = `INVALID`;
+                                                                                                                                                profElem.style.color = '#f6465d';
+                                                                                                                                            }
 
-                                                                                            if (data.error.code === 'RateLimit' || data.error.message.includes('rate limit')) {
-                                                                                                console.warn("Deriv API Rate Limit hit - request ignored.");
-                                                                                                return;
-                                                                                            }
+                                                                                                                                            // Auto-correct minimum stake if API explicitly provides it in the error
+                                                                                                                                            const msg = data.error.message.toLowerCase();
+                                                                                                                                            const matchAmt = msg.match(/minimum stake.*?(\d+\.?\d*)/);
+                                                                                                                                            if (matchAmt) {
+                                                                                                                                                document.getElementById('trade-amount').value = matchAmt[1];
+                                                                                                                                                updateButtonText();
+                                                                                                                                                setTimeout(requestPayoutProposal, 500);
+                                                                                                                                            }
+                                                                                                                                            return; 
+                                                                                                                                        }
 
-                                                                                            if (data.error.code === 'InvalidToken' || data.error.code === 'AuthorizationRequired') {
-                                                                                                setTimeout(connect, 5000); // Silent reconnect loop
-                                                                                            } else if (data.error.code === 'InvalidContractParameters') {
-                                                                                                alert("⚠️ PARAMETER ERROR: Trading is not available for this Symbol at the selected duration/mode.\n\nTry changing Duration or Asset.");
-                                                                                            } else if (data.error.code === 'InvalidContractProposal' || data.error.message.toLowerCase().includes('time duration')) {
-                                                                                                const pctElem = document.getElementById('payout-percentage');
-                                                                                                const rateBadge = document.getElementById('asset-payout-rate');
-                                                                                                const profElem = document.getElementById('payout-profit');
-                                                    
-                                                                                                if (pctElem) pctElem.innerText = `N/A`;
-                                                                                                if (rateBadge) rateBadge.innerText = `UNAVAILABLE`;
-                                                                                                if (profElem) {
-                                                                                                    profElem.innerText = `INVALID`;
-                                                                                                    profElem.style.color = '#f6465d';
-                                                                                                }
-                                                                                            } else {
-                                                                                                alert("⚠️ API ERROR: " + data.error.message);
-                                                                                            }
-                                                                                            return;
-                                                                                        }
+                                                                                                                                        if (data.error.code === 'AlreadySubscribed' || data.error.message.includes('already subscribed')) {
+                                                                                                                                            return;
+                                                                                                                                        }
+
+                                                                                                                                        if (data.error.code === 'RateLimit' || data.error.message.includes('rate limit')) {
+                                                                                                                                            console.warn("Deriv API Rate Limit hit - request ignored.");
+                                                                                                                                            return;
+                                                                                                                                        }
+
+                                                                                                                                        if (data.error.code === 'InvalidToken' || data.error.code === 'AuthorizationRequired') {
+                                                                                                                                            setTimeout(connect, 5000); // Silent reconnect loop
+                                                                                                                                        } else if (data.error.code === 'InvalidContractParameters') {
+                                                                                                                                            alert("⚠️ PARAMETER ERROR: Trading is not available for this Symbol at the selected duration/mode.\n\nTry changing Duration or Asset.");
+                                                                                                                                        } else {
+                                                                                                                                            // Only alert on manual user actions (like clicking trade) that fail
+                                                                                                                                            alert("⚠️ API ERROR: " + data.error.message);
+                                                                                                                                        }
+                                                                                                                                        return;
+                                                                                                                                    }
 
                                             if (data.balance) {
                                                 balanceDisplay.innerText = `$${data.balance.balance.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
