@@ -1398,7 +1398,7 @@
                         
                                                                                                 if (newPair.startsWith('frx') || newPair.startsWith('cry')) {
                                                                                                     minAmt = 0.50; 
-                                                                                                    minExp = 60;   
+                                                                                                    minExp = 300; // Crypto and Forex typically require at least 5 minutes (300s) on options
                                                                                                 }
 
                                                 const amtInput = document.getElementById('trade-amount');
