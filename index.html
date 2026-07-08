@@ -1161,12 +1161,13 @@
                     playAlert('buy');
 
                     // Immediately subscribe to the live profit updates for this contract
-                    ws.send(JSON.stringify({"proposal_open_contract": 1, "contract_id": cid, "subscribe": 1}));
+                                        ws.send(JSON.stringify({"proposal_open_contract": 1, "contract_id": cid, "subscribe": 1}));
 
-                    updateTradeUI();
-                }
+                                        updateTradeUI();
+                                        updateQuickCashoutUI();
+                                    }
 
-                if (data.proposal_open_contract) {
+                                    if (data.proposal_open_contract) {
                     const c = data.proposal_open_contract;
                     const t = tradeHistory.find(x => x.id === c.contract_id);
                     if (t) {
@@ -1194,10 +1195,11 @@
                         }
 
                         // Re-render UI to show dynamic ticking live profit and sell button toggle
-                        updateTradeUI();
-                    }
-                }
-            };
+                                                updateTradeUI();
+                                                updateQuickCashoutUI();
+                                            }
+                                        }
+                                    };
 
             ws.onclose = () => {
                 setTimeout(connect, 3000);
@@ -1221,8 +1223,58 @@
             });
         });
 
-                function updateTradeUI() {
-                    const list = document.getElementById('tradeList');
+                function updateQuickCashoutUI() {
+                                    const panel = document.getElementById('quick-cashout-panel');
+                                    if (!panel) return;
+                    
+                                    const profitEl = document.getElementById('qc-profit');
+                                    const btn = document.getElementById('qc-btn');
+                                    const autoValEl = document.getElementById('auto-cashout-val');
+                                    const autoToggle = document.getElementById('auto-cashout-toggle');
+
+                                    const openTrades = tradeHistory.filter(t => t.status === 'OPEN' && t.is_valid_to_sell === 1);
+                                    if (openTrades.length === 0) {
+                                        panel.style.display = 'none';
+                                        return;
+                                    }
+
+                                    panel.style.display = 'flex';
+                                    const t = openTrades[openTrades.length - 1]; // Track latest active trade
+
+                                    profitEl.innerText = (t.profit >= 0 ? '+' : '') + '$' + t.profit.toFixed(2);
+                                    profitEl.style.color = t.profit >= 0 ? '#0ecb81' : '#f6465d';
+
+                                    btn.onclick = () => {
+                                        btn.innerText = '...';
+                                        sellContract(t.id);
+                                    };
+                    
+                                    if (t.sellTriggered) btn.innerText = '...';
+                                    else btn.innerText = 'CASHOUT';
+
+                                    const autoStr = autoValEl.value;
+                                    if (autoStr !== '') {
+                                        const autoVal = parseFloat(autoStr);
+                                        if (!isNaN(autoVal)) {
+                                            const mode = autoToggle.getAttribute('data-mode');
+                                            let targetProfit = autoVal;
+                                            if (mode === 'pct') {
+                                                targetProfit = (t.stake * (autoVal / 100));
+                                            }
+
+                                            if ((autoVal > 0 && t.profit >= targetProfit) || (autoVal < 0 && t.profit <= targetProfit)) {
+                                                if (!t.sellTriggered) {
+                                                    t.sellTriggered = true;
+                                                    btn.innerText = '...';
+                                                    sellContract(t.id);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                function updateTradeUI() {
+                                    const list = document.getElementById('tradeList');
                     const filteredTrades = tradeHistory.filter(t => currentTradeTab === 'ALL' || t.status === currentTradeTab);
 
                     if (filteredTrades.length === 0) {
@@ -1368,7 +1420,23 @@
                                                                             }
                                                                         });
                                     
-                                                                // Timeframe Toggle
+                                                                // Auto Cashout Toggle
+                                                                                                    document.getElementById('auto-cashout-toggle').addEventListener('click', (e) => {
+                                                                                                        const btn = e.target;
+                                                                                                        if (btn.getAttribute('data-mode') === 'pct') {
+                                                                                                            btn.setAttribute('data-mode', 'amt');
+                                                                                                            btn.innerText = '$';
+                                                                                                        } else {
+                                                                                                            btn.setAttribute('data-mode', 'pct');
+                                                                                                            btn.innerText = '%';
+                                                                                                        }
+                                                                                                        if (typeof updateQuickCashoutUI === 'function') updateQuickCashoutUI();
+                                                                                                    });
+                                                                                                    document.getElementById('auto-cashout-val').addEventListener('input', () => {
+                                                                                                        if (typeof updateQuickCashoutUI === 'function') updateQuickCashoutUI();
+                                                                                                    });
+
+                                                                                                    // Timeframe Toggle
                                                                                                     document.getElementById('timeframe-toggle-btn').addEventListener('click', () => {
                                                                                                         const qtContainer = document.getElementById('quick-time-container');
                                                                                                         qtContainer.style.display = (qtContainer.style.display === 'none') ? 'grid' : 'none';
