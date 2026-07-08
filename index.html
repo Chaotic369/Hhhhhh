@@ -545,6 +545,7 @@
                                 let currentPair = "1HZ100V";
                                 let tickSubscriptions = {};
                                                 let tradeHistory = [];
+                                                try { tradeHistory = JSON.parse(localStorage.getItem('trade_history_v2')) || []; } catch(e) { tradeHistory = []; }
                                                 let proposalSubId = null;
 
                                 function requestPayoutProposal() {
@@ -985,6 +986,15 @@
 
             ws.onopen = () => {
                                         ws.send(JSON.stringify({ balance: 1, subscribe: 1 }));
+                                        if (tradeHistory.length > 0) {
+                                            tradeHistory.forEach(t => {
+                                                if (t.status === 'OPEN' && t.id) {
+                                                    ws.send(JSON.stringify({"proposal_open_contract": 1, "contract_id": t.id, "subscribe": 1}));
+                                                }
+                                            });
+                                            if (typeof updateTradeUI === 'function') updateTradeUI();
+                                            if (typeof updateQuickCashoutUI === 'function') updateQuickCashoutUI();
+                                        }
                                         resizeCanvas();
                                         fetchPairData(currentPair);
                                         requestPayoutProposal();
