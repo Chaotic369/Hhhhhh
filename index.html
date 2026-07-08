@@ -542,10 +542,10 @@
                                 const API_BASE = "https://api.derivws.com";
 
                 let ws;
-                let currentPair = "1HZ100V";
-                let tickSubscriptions = {};
-                                let tradeHistory = [];
-                                let proposalSubId = null;
+                                let currentPair = "1HZ100V";
+                                let tickSubscriptions = {};
+                                                let tradeHistory = [];
+                                                let proposalSubId = null;
 
                                 function requestPayoutProposal() {
                                                                     if (!ws || ws.readyState !== WebSocket.OPEN) return;
@@ -984,11 +984,11 @@
             ws = new WebSocket(wsUrl);
 
             ws.onopen = () => {
-                            ws.send(JSON.stringify({ balance: 1, subscribe: 1 }));
-                            resizeCanvas();
-                            fetchPairData(currentPair);
-                            requestPayoutProposal();
-                        };
+                                        ws.send(JSON.stringify({ balance: 1, subscribe: 1 }));
+                                        resizeCanvas();
+                                        fetchPairData(currentPair);
+                                        requestPayoutProposal();
+                                    };
 
             ws.onmessage = (msg) => {
                             const data = JSON.parse(msg.data);
@@ -1284,8 +1284,8 @@
                                                                     }
 
                                                                     function updateTradeUI() {
-                                    const list = document.getElementById('tradeList');
-                    const filteredTrades = tradeHistory.filter(t => currentTradeTab === 'ALL' || t.status === currentTradeTab);
+                                                                                                        const list = document.getElementById('tradeList');
+                                                                                        const filteredTrades = tradeHistory.filter(t => currentTradeTab === 'ALL' || t.status === currentTradeTab);
 
                     if (filteredTrades.length === 0) {
                         list.innerHTML = '<div style="color:#8892b0; text-align:center; padding:20px; font-size:12px; font-weight:bold; letter-spacing:0.05em;">NO TRADES FOUND</div>';
