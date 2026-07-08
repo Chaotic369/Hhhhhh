@@ -516,7 +516,14 @@
                                                                     </div>
                                                                 </div>
 
-                                                                
+                                                                <div class="asset-category">
+                                                                    <div class="category-title">Cryptocurrency</div>
+                                                                    <div class="category-grid">
+                                                                        <button class="asset-select-btn" data-val="cryBTCUSD">BTC/USD</button>
+                                                                        <button class="asset-select-btn" data-val="cryETHUSD">ETH/USD</button>
+                                                                        <button class="asset-select-btn" data-val="cryLTCUSD">LTC/USD</button>
+                                                                    </div>
+                                                                </div>
 
                                                                 <div class="asset-category">
                                                                     <div class="category-title">Commodities</div>
@@ -1601,12 +1608,12 @@
                                                 currentAssetName.innerText = newName;
 
                                                 let minAmt = 0.35;
-                                                                                                                                                let minExp = 5; 
+                                                                                                let minExp = 5; 
                         
-                                                                                                                                                if (newPair.startsWith('frx')) {
-                                                                                                                                                    minAmt = 0.50; 
-                                                                                                                                                    minExp = 300; // Forex typically require at least 5 minutes (300s) on options
-                                                                                                                                                }
+                                                                                                if (newPair.startsWith('frx') || newPair.startsWith('cry')) {
+                                                                                                    minAmt = 0.50; 
+                                                                                                    minExp = 300; // Crypto and Forex typically require at least 5 minutes (300s) on options
+                                                                                                }
 
                                                 const amtInput = document.getElementById('trade-amount');
                                                 const expInput = document.getElementById('trade-expiry');
