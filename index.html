@@ -367,12 +367,28 @@
                                                 <button class="quick-time-btn" data-val="5">5s</button>
                                                 <button class="quick-time-btn" data-val="15">15s</button>
                                                 <button class="quick-time-btn" data-val="60">1m</button>
-                                                <button class="quick-time-btn" data-val="300">5m</button>
-                                                <button class="quick-time-btn" data-val="900">15m</button>
-                                            </div>
-                                        </div>
-                </div>
-                <div class="bottom-controls">
+                                                                            <button class="quick-time-btn" data-val="300">5m</button>
+                                                                            <button class="quick-time-btn" data-val="900">15m</button>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div id="quick-cashout-panel" style="display:none; position:absolute; bottom:20px; left:50%; transform:translateX(-50%); background:var(--bg-panel); padding:10px 14px; border-radius:20px; box-shadow:0 8px 24px rgba(0,0,0,0.5); z-index:50; flex-direction:column; gap:8px; align-items:center; width: 85%; max-width: 260px; border: 1px solid var(--grid-line);">
+                                                                        <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+                                                                            <div style="display:flex; flex-direction:column;">
+                                                                                <span style="font-size:10px; color:var(--text-muted); font-weight:bold; letter-spacing: 0.05em;">LIVE PROFIT</span>
+                                                                                <span id="qc-profit" style="font-weight:900; font-size:18px;">+$0.00</span>
+                                                                            </div>
+                                                                            <button id="qc-btn" style="background:rgba(246,70,93,0.1); color:#f6465d; border:1px solid #f6465d; padding:8px 16px; border-radius:16px; font-weight:900; font-size:11px; letter-spacing: 0.05em; cursor:pointer; transition: transform 0.1s;">CASHOUT</button>
+                                                                        </div>
+                                                                        <div style="display:flex; width:100%; gap:4px; align-items:center; background:var(--bg-btn); padding:4px 8px; border-radius:12px;">
+                                                                            <span style="font-size:10px; font-weight:bold; color:var(--text-muted); white-space:nowrap;">AUTO AT:</span>
+                                                                            <input type="number" id="auto-cashout-val" placeholder="Value" step="0.1" style="flex:1; height:24px; font-size:14px; padding:0 4px; background:transparent; border:none; color:var(--text-main); outline:none; text-align:right; font-weight:bold;">
+                                                                            <button id="auto-cashout-toggle" style="background:var(--bg-panel); border:none; color:var(--text-main); font-weight:bold; border-radius:8px; padding:4px 10px; font-size:12px; cursor:pointer;" data-mode="pct">%</button>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="bottom-controls">
                             <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 4px; margin-bottom: 2px;">
                                                                         <button id="asset-selector-btn" style="background: transparent; color: var(--text-main); border: none; padding: 0; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-flex; flex-direction: column; align-items: flex-start; gap: 4px; outline: none; vertical-align: middle;">
                                                                                                                                                     <div style="display: flex; align-items: center; gap: 4px;">
