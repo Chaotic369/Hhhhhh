@@ -372,49 +372,45 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div id="quick-cashout-panel" style="display:none; position:absolute; bottom:20px; left:50%; transform:translateX(-50%); background:var(--bg-panel); padding:10px 14px; border-radius:20px; box-shadow:0 8px 24px rgba(0,0,0,0.5); z-index:50; flex-direction:column; gap:8px; align-items:center; width: 85%; max-width: 260px; border: 1px solid var(--grid-line);">
-                                                                        <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
-                                                                            <div style="display:flex; flex-direction:column;">
-                                                                                <span style="font-size:10px; color:var(--text-muted); font-weight:bold; letter-spacing: 0.05em;">LIVE PROFIT</span>
-                                                                                <span id="qc-profit" style="font-weight:900; font-size:18px;">+$0.00</span>
-                                                                            </div>
-                                                                            <button id="qc-btn" style="background:rgba(246,70,93,0.1); color:#f6465d; border:1px solid #f6465d; padding:8px 16px; border-radius:16px; font-weight:900; font-size:11px; letter-spacing: 0.05em; cursor:pointer; transition: transform 0.1s;">CASHOUT</button>
-                                                                        </div>
-                                                                        <div style="display:flex; width:100%; gap:4px; align-items:center; background:var(--bg-btn); padding:4px 8px; border-radius:12px;">
-                                                                            <span style="font-size:10px; font-weight:bold; color:var(--text-muted); white-space:nowrap;">AUTO AT:</span>
-                                                                            <input type="number" id="auto-cashout-val" placeholder="Value" step="0.1" style="flex:1; height:24px; font-size:14px; padding:0 4px; background:transparent; border:none; color:var(--text-main); outline:none; text-align:right; font-weight:bold;">
-                                                                            <button id="auto-cashout-toggle" style="background:var(--bg-panel); border:none; color:var(--text-main); font-weight:bold; border-radius:8px; padding:4px 10px; font-size:12px; cursor:pointer;" data-mode="pct">%</button>
-                                                                        </div>
-                                                                    </div>
+                                                                    <div id="quick-cashout-panel" style="display:none; position:absolute; bottom:15px; left:50%; transform:translateX(-50%); z-index:50; flex-direction:column; gap:6px; width: 90%; max-width: 320px;">
+                                                                                                                                        </div>
 
-                                                                </div>
-                                                                <div class="bottom-controls">
-                            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 4px; margin-bottom: 2px;">
-                                                                        <button id="asset-selector-btn" style="background: transparent; color: var(--text-main); border: none; padding: 0; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-flex; flex-direction: column; align-items: flex-start; gap: 4px; outline: none; vertical-align: middle;">
-                                                                                                                                                    <div style="display: flex; align-items: center; gap: 4px;">
-                                                                                                                                                        <span id="current-asset-name">V100[1s]</span>
-                                                                                                                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                                                                                                                                    </div>
-                                                                                                                                                    <span id="asset-payout-rate" style="font-size: 10px; color: #0ecb81; font-weight: 800; background: rgba(14,203,129,0.1); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.05em; transition: all 0.2s;">--% PAYOUT</span>
+                                                                                                                                    </div>
+                                                                                                                                    <div class="bottom-controls">
+                                                                                                <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 4px; margin-bottom: 2px;">
+                                                                                                                                            <button id="asset-selector-btn" style="background: transparent; color: var(--text-main); border: none; padding: 0; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-flex; flex-direction: column; align-items: flex-start; gap: 4px; outline: none; vertical-align: middle;">
+                                                                                                                                                                                                                        <div style="display: flex; align-items: center; gap: 4px;">
+                                                                                                                                                                                                                            <span id="current-asset-name">V100[1s]</span>
+                                                                                                                                                                                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                        <span id="asset-payout-rate" style="font-size: 10px; color: #0ecb81; font-weight: 800; background: rgba(14,203,129,0.1); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.05em; transition: all 0.2s;">--% PAYOUT</span>
+                                                                                                                                                                                                                    </button>
+                                                                                                                                            <div style="flex-grow: 1; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                                                                                                                                <span id="balance-display" style="color: #0ecb81; font-weight: 800; font-size: 16px; letter-spacing: 0.05em;">$0.00</span>
+                                                                                                                                                <span id="conn-status" style="display:none !important;"></span>
+                                                                                                                                            </div>
+                                                                                                                                            <div style="display: flex; gap: 14px; align-items: center;">
+                                                                                                                                                <button id="sound-toggle-btn" class="action-btn" aria-label="Toggle Sound" style="color: var(--text-muted); padding: 0 !important; background: transparent; height: auto;">
+                                                                                                                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
                                                                                                                                                 </button>
-                                                                        <div style="flex-grow: 1; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                                                                            <span id="balance-display" style="color: #0ecb81; font-weight: 800; font-size: 16px; letter-spacing: 0.05em;">$0.00</span>
-                                                                            <span id="conn-status" style="display:none !important;"></span>
-                                                                        </div>
-                                                                        <div style="display: flex; gap: 14px; align-items: center;">
-                                                                            <button id="sound-toggle-btn" class="action-btn" aria-label="Toggle Sound" style="color: var(--text-muted); padding: 0 !important; background: transparent; height: auto;">
-                                                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                                                                            </button>
-                                                                            <button id="theme-toggle-btn" class="action-btn" aria-label="Toggle Theme" style="color: var(--text-main); padding: 0 !important; background: transparent; height: auto;">
-                                                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                                                                            </button>
-                                                                            <button id="show-trades-btn" class="action-btn btn-log" aria-label="Trades Log" style="padding: 0 !important; background: transparent; height: auto;">
-                                                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
+                                                                                                                                                <button id="theme-toggle-btn" class="action-btn" aria-label="Toggle Theme" style="color: var(--text-main); padding: 0 !important; background: transparent; height: auto;">
+                                                                                                                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                                                                                                                                                </button>
+                                                                                                                                                <button id="show-trades-btn" class="action-btn btn-log" aria-label="Trades Log" style="padding: 0 !important; background: transparent; height: auto;">
+                                                                                                                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                                                                                                                                </button>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
 
-                                                                                                            <div style="display: flex; width: 100%; gap: 40px; justify-content: center; margin-bottom: 12px; margin-top: 4px;" id="trade-type-tabs">
+                                                                                                                                        <div style="display:flex; width:100%; gap:4px; align-items:center; background:var(--bg-btn); padding:6px 12px; border-radius:16px; margin-top: 4px; box-sizing: border-box; justify-content: space-between;">
+                                                                                                                                            <span style="font-size:11px; font-weight:800; color:var(--text-muted); letter-spacing: 0.05em;">AUTO CASHOUT</span>
+                                                                                                                                            <div style="display:flex; align-items:center; gap:4px; background:var(--bg-panel); border-radius:12px; padding: 2px 4px;">
+                                                                                                                                                <input type="number" id="auto-cashout-val" placeholder="Off" step="0.1" style="width:60px; height:24px; font-size:14px; padding:0 4px; background:transparent; border:none; color:var(--text-main); outline:none; text-align:right; font-weight:bold;">
+                                                                                                                                                <button id="auto-cashout-toggle" style="background:var(--bg-btn); border:none; color:var(--text-main); font-weight:bold; border-radius:8px; padding:4px 10px; font-size:12px; cursor:pointer;" data-mode="pct">%</button>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+
+                                                                                                                                                                                <div style="display: flex; width: 100%; gap: 40px; justify-content: center; margin-bottom: 12px; margin-top: 10px;" id="trade-type-tabs">
                                                                                                                                                                                                                             <button class="trade-tab active" data-ttype="options" style="flex: none; background: transparent !important; box-shadow: none !important; font-size: 13px; font-weight: 800; letter-spacing: 0.05em; padding: 4px 8px;">BINARY OPTIONS</button>
                                                                                                                                                                                                                             <button class="trade-tab" data-ttype="multiplier" style="flex: none; background: transparent !important; box-shadow: none !important; font-size: 13px; font-weight: 800; letter-spacing: 0.05em; padding: 4px 8px;">MULTIPLIER</button>
                                                                                                                                                                                                                         </div>
@@ -1223,12 +1219,19 @@
             });
         });
 
-                function updateQuickCashoutUI() {
+                window.triggerCashout = function(id) {
+                                    const t = tradeHistory.find(x => x.id === id);
+                                    if (t && !t.sellTriggered) {
+                                        t.sellTriggered = true;
+                                        sellContract(id);
+                                        if (typeof updateQuickCashoutUI === 'function') updateQuickCashoutUI();
+                                    }
+                                };
+
+                                function updateQuickCashoutUI() {
                                     const panel = document.getElementById('quick-cashout-panel');
                                     if (!panel) return;
                     
-                                    const profitEl = document.getElementById('qc-profit');
-                                    const btn = document.getElementById('qc-btn');
                                     const autoValEl = document.getElementById('auto-cashout-val');
                                     const autoToggle = document.getElementById('auto-cashout-toggle');
 
@@ -1239,41 +1242,47 @@
                                     }
 
                                     panel.style.display = 'flex';
-                                    const t = openTrades[openTrades.length - 1]; // Track latest active trade
+                                    let html = '';
 
-                                    profitEl.innerText = (t.profit >= 0 ? '+' : '') + '$' + t.profit.toFixed(2);
-                                    profitEl.style.color = t.profit >= 0 ? '#0ecb81' : '#f6465d';
+                                    openTrades.forEach(t => {
+                                        const profColor = t.profit >= 0 ? '#0ecb81' : '#f6465d';
+                                        const profSign = t.profit >= 0 ? '+' : '';
+                                        const btnText = t.sellTriggered ? '...' : 'CASHOUT';
+                        
+                                        html += `
+                                        <div style="display:flex; justify-content:space-between; width:100%; align-items:center; background:var(--bg-panel); padding:8px 14px; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,0.3); border: 1px solid var(--grid-line);">
+                                            <div style="display:flex; flex-direction:column;">
+                                                <span style="font-size:10px; color:var(--text-muted); font-weight:bold; letter-spacing: 0.05em;">${t.type} #${t.id.toString().slice(-4)}</span>
+                                                <span style="font-weight:900; font-size:16px; color:${profColor};">${profSign}$${t.profit.toFixed(2)}</span>
+                                            </div>
+                                            <button onclick="triggerCashout(${t.id})" style="background:rgba(246,70,93,0.1); color:#f6465d; border:1px solid #f6465d; padding:6px 14px; border-radius:12px; font-weight:900; font-size:11px; letter-spacing: 0.05em; cursor:pointer; transition:transform 0.1s;">${btnText}</button>
+                                        </div>`;
 
-                                    btn.onclick = () => {
-                                        btn.innerText = '...';
-                                        sellContract(t.id);
-                                    };
-                    
-                                    if (t.sellTriggered) btn.innerText = '...';
-                                    else btn.innerText = 'CASHOUT';
+                                        // Handle Auto-Cashout check globally across all open trades
+                                        const autoStr = autoValEl ? autoValEl.value : '';
+                                        if (autoStr !== '') {
+                                            const autoVal = parseFloat(autoStr);
+                                            if (!isNaN(autoVal)) {
+                                                const mode = autoToggle.getAttribute('data-mode');
+                                                let targetProfit = autoVal;
+                                                if (mode === 'pct') {
+                                                    targetProfit = (t.stake * (autoVal / 100));
+                                                }
 
-                                    const autoStr = autoValEl.value;
-                                    if (autoStr !== '') {
-                                        const autoVal = parseFloat(autoStr);
-                                        if (!isNaN(autoVal)) {
-                                            const mode = autoToggle.getAttribute('data-mode');
-                                            let targetProfit = autoVal;
-                                            if (mode === 'pct') {
-                                                targetProfit = (t.stake * (autoVal / 100));
-                                            }
-
-                                            if ((autoVal > 0 && t.profit >= targetProfit) || (autoVal < 0 && t.profit <= targetProfit)) {
-                                                if (!t.sellTriggered) {
-                                                    t.sellTriggered = true;
-                                                    btn.innerText = '...';
-                                                    sellContract(t.id);
+                                                if ((autoVal > 0 && t.profit >= targetProfit) || (autoVal < 0 && t.profit <= targetProfit)) {
+                                                    if (!t.sellTriggered) {
+                                                        t.sellTriggered = true;
+                                                        sellContract(t.id);
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                }
+                                    });
 
-                                function updateTradeUI() {
+                                    panel.innerHTML = html;
+                                                                    }
+
+                                                                    function updateTradeUI() {
                                     const list = document.getElementById('tradeList');
                     const filteredTrades = tradeHistory.filter(t => currentTradeTab === 'ALL' || t.status === currentTradeTab);
 
